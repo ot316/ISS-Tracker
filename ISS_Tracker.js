@@ -45,11 +45,15 @@ function plot() {
                 var y = (MapHeight / 2) - (MapWidth * mercN / (2 * Math.PI))
                 clear()
                 background(map);
-                image(iss, x - 50, y - 50, 100, 100);
-                var today = new Date(); 
+                noStroke();
+                let col = color(200 , 25, 20)
+                fill(col);
+                circle(x, y, 8);
+                image(iss, x - 53, y - 53, 100, 100);
+                                var today = new Date(); 
                 var time = today.getHours() + ":" + today.getMinutes();
                 var str = 'Time: '
-                var text = str.concat(time, ' \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Velocity = ', parseFloat(Velocity), 'km/h \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Altitude = ', parseFloat(Altitude), 'm').replace('-', ' ');
+                var text = str.concat(time, ' \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Velocity = ', parseFloat(Velocity), 'km/h \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Altitude = ', parseFloat(Altitude), 'km').replace('-', ' ');
                 document.getElementById("text").innerHTML = text;
             }
         }
