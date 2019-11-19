@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portfolio Website</title>
+    <link rel="stylesheet" href="Styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="Media/Misc/Website Icon.png">
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="p5/p5.min.js"></script>
+</head>
+
+<div class="background" style="min-width: 120vh">
+    <div class="banner" ;>
+        <div class="banner-content">
+            <img class="logo" src="Media/Misc/Website Icon.png" alt="Logo">
+            <h1>Oli&nbsp;Thompson</h1>
+            <div class="socialmediacontainer">
+                <a href="http://www.linkedin.com/in/oli-thompson" target="_blank">
+                    <img class="socialmedialogo" alt="Linkedin" src="Media/social_media_logos/Linkedin.svg"></a>
+                <a href="https://github.com/ot316" target="_blank">
+                    <img class="socialmedialogo" alt="Github" src="Media/social_media_logos/Github.svg"></a>
+                <a href="https://www.instagram.com/olithompson_designengineer/" target="_blank">
+                    <img class="socialmedialogo" alt="Instagram" src="Media/social_media_logos/Instagram.png"></a>
+            </div>
+        </div>
+    </div>
+    <img class="logomobile" src="Media/Misc/Website Icon.png" alt="Logo">
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html">
+            <p class="sidenavtext">Projects</p>
+        </a>
+        <a href="about_me.html">
+            <p class="sidenavtext">About&nbsp;Me</p>
+        </a>
+        <a href="render_gallery.html">
+            <p class="sidenavtext">Render&nbsp;Gallery</p>
+        </a>
+        <a href="digital_art.html">
+            <p class="sidenavtext">Digital&nbsp;Art</p>
+        </a>
+        <div class="socialmediacontainermobile">
+            <a href="https://www.instagram.com/olithompson_designengineer/" target="_blank">
+                <img class="socialmedialogomobile" alt="Instagram" src="Media/social_media_logos/Instagram.png"></a>
+            <a href="https://github.com/ot316" target="_blank">
+                <img class="socialmedialogomobile" alt="Github" src="Media/social_media_logos/Github.svg"></a>
+            <a href="http://www.linkedin.com/in/oli-thompson" target="_blank">
+                <img class="socialmedialogomobile" alt="Linkedin" src="Media/social_media_logos/Linkedin.svg"></a>
+        </div>
+    </div>
+    <span class="sidenavbutton" onclick="openNav()">&#9776;</span>
+    <div class="navbarwrapper">
+        <div class="navbar">
+            <ul>
+                <li><a class="active" href="index.html">Projects</a></li>
+                <li><a href="about_me.html">About Me</a></li>
+                <li><a href="render_gallery.html"> Render Gallery</a></li>
+                <li><a href="digital_art.html">Digital Art</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div>
+            <!-- Heading -->
+            <h1 style="text-align: center; padding-top: 30px;">International Space Station Tracker</h1>
+            <div class="tagcontainer">
+                <h2>Front End Web Development</h2>
+                <h2>Javascript</h2>
+                <h2>HTML</h2>
+                <h2>CSS</h2>
+            </div>
+            <!-- First Bullet Points -->
+            <ul class="headingbullets">
+                <li>I used Javascript to retrieve the latitude and longitude of the International Space Station every 3
+                    seconds. </li>
+                <li>I transformed the latitude and longitude to a mercator projection and displayed the data on a map.
+                </li>
+            </ul>
+            <div id="cnv" class="hero" style="min-height: 600px"></div>
+            <h3 style="padding-bottom: 20px;" id="text"></h3>
+
+            
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <p>All work Copyright 2019 - Oli Thompson</p>
+</footer>
+
+<script>
+    p5.disableFriendlyErrors = true; // disables FES
+    var cnv;
+    var res;
+    let map;
+    let iss;
+    
+    setInterval(plot, 3000);
+
+    function preload() {
+        map = loadImage('Media/ISS_tracker/map.png');
+        iss = loadImage('Media/ISS_tracker/ISS.png');
+    }
+
+    function setup() {
+        MapWidth = 870;
+        MapHeight = 580;
+        cnv = createCanvas(MapWidth, MapHeight);
+        var xx = (windowWidth - width) / 2;
+        cnv.position(xx, null);
+        cnv.parent("cnv")
+        plot();
+    }
+    
+    function windowResized() {
+        var xx = (windowWidth - width) / 2;
+        cnv.position(xx, null);
+    }
+
+    function plot() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: 'https://api.wheretheiss.at/v1/satellites/25544',
+            async: false,
+            crossDomain: true,
+            complete: function (data) {
+                if (data.readyState === 4 && data.status === 200) {
+                    Lat = data.responseJSON.latitude;
+                    Long = data.responseJSON.longitude;
+                    Velocity = data.responseJSON.velocity.toFixed(2).toString();
+                    Altitude = data.responseJSON.altitude.toFixed(2).toString();
+                    var x = (parseFloat(Long) + 180) * (MapWidth / 360)
+                    var latRad = parseFloat(Lat) * Math.PI / 180
+                    var mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)))
+                    var y = (MapHeight / 2) - (MapWidth * mercN / (2 * Math.PI))
+                    clear()
+                    background(map);
+                    image(iss, x - 50, y - 50, 100, 100);
+                    var today = new Date(); 
+                    var time = today.getHours() + ":" + today.getMinutes();
+                    var str = 'Time: '
+                    var text = str.concat(time, ' \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Velocity = ', parseFloat(Velocity), 'km/h \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Altitude = ', parseFloat(Altitude), 'm').replace('-', ' ');
+                    document.getElementById("text").innerHTML = text;
+                }
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+
+
+</div>
+
+</html>
