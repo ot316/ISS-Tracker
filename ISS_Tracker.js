@@ -49,11 +49,11 @@ function plot() {
                 let col = color(200 , 25, 20)
                 fill(col);
                 circle(x, y, 8);
-                image(iss, x - 53, y - 53, 100, 100);
+                image(iss, x - 55, y - 53, 100, 100);
                                 var today = new Date(); 
                 var time = today.getHours() + ":" + today.getMinutes();
                 var str = 'Time: '
-                var text = str.concat(time, ' \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Velocity = ', parseFloat(Velocity), 'km/h \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Altitude = ', parseFloat(Altitude), 'km').replace('-', ' ');
+                var text = str.concat(time, ' \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Velocity = ', parseFloat(Velocity), '\xa0\xa0 km/h \xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0 Altitude = ', parseFloat(Altitude), '\xa0\xa0 km');
                 document.getElementById("text").innerHTML = text;
             }
         }
