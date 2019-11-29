@@ -1,6 +1,7 @@
 from ISS_track import findISS
 import smtplib
 
+print("Running")
 #London
 Latmax = 52.078635
 Longmax = 0.542653
