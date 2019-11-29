@@ -12,10 +12,11 @@ server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 smtp_server = "smtp.gmail.com"
 sender_email = "isstracker2019@gmail.com"  # Enter your address
-receiver_email = "olithompson1919@rocketmail.com"  # Enter receiver address
+receiver_email = "olithompson@rocketmail.com"  # Enter receiver address
 password = 'jsRfpcy9'
 server.login(sender_email, password)
 server.sendmail(sender_email, receiver_email, "Tracker turned on")
+
 while True:
     data = findISS()
     if (Latmin < float(data['iss_position']['latitude']) < Latmax) and (Longmin < float(data['iss_position']['latitude']) < Longmax):
