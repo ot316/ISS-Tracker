@@ -1,12 +1,13 @@
 from ISS_track import findISS
 import smtplib
+from time import sleep
 
 print("Running")
 #London
-Latmax = 52.078635
-Longmax = 0.542653
-Latmin = 50.768049
-Longmin = -0.946666
+Latmax = 53.078635
+Longmax = 1.542653
+Latmin = 49.768049
+Longmin = -1.946666
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
@@ -23,10 +24,12 @@ server.sendmail(sender_email, receiver_email, message)
 
 while True:
     data = findISS()
+    sleep(0.5)
     if (Latmin < float(data['iss_position']['latitude']) < Latmax) and (Longmin < float(data['iss_position']['latitude']) < Longmax):
         mmessage = """\
         Subject: ISS Tracker
 
-        ISS directly overhead"""
+        ISS overhead"""
         server.sendmail(sender_email, receiver_email, message)
+        sleep(20)
 
