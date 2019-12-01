@@ -4,10 +4,10 @@ from time import sleep
 
 print("Running")
 #London
-Latmax = 53.078635
-Longmax = 1.542653
-Latmin = 49.768049
-Longmin = -1.946666
+Latmax = 55.078635
+Longmax = 3.542653
+Latmin = 47.768049
+Longmin = -3.946666
 
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
