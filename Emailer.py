@@ -14,7 +14,7 @@ server.starttls()
 smtp_server = "smtp.gmail.com"
 sender_email = "isstracker2019@gmail.com"  # Enter your address
 receiver_email = "olithompson1919@gmail.com"  # Enter receiver address
-password = 'jsRfpcy9'
+password = ''
 server.login(sender_email, password)
 message = """\
 Subject: ISS Tracker
@@ -26,7 +26,7 @@ while True:
     data = findISS()
     sleep(0.5)
     if (Latmin < float(data['iss_position']['latitude']) < Latmax) and (Longmin < float(data['iss_position']['latitude']) < Longmax):
-        mmessage = """\
+        message = """\
         Subject: ISS Tracker
 
         ISS overhead"""
